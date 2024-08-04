@@ -5,6 +5,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
+import { PostsModule } from './posts/posts.module';
+import { CompaniesModule } from './companies/companies.module';
+import { Post } from './common/entities/post.entity';
+import { Company } from './common/entities/company.entity';
+
 // TODO: 모듈을 모듈화
 const typeOrmModuleOptions = {
   useFactory: async (
@@ -17,7 +22,7 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_NAME'),
-    entities: [],
+    entities: [Company, Post],
     synchronize: configService.get('DB_SYNC'),
     logging: true,
   }),
@@ -39,6 +44,8 @@ const typeOrmModuleOptions = {
         JWT_SECRET_KEY: Joi.string().required(),
       }),
     }),
+    PostsModule,
+    CompaniesModule,
   ],
   controllers: [],
   providers: [],
