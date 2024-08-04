@@ -45,8 +45,45 @@ export class PostsService {
     }));
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} post`;
+  async findOne(id: number) {
+    const { company, ...post } = await this.postRepo
+      .createQueryBuilder('post')
+      .select([
+        'post.id',
+        'post.title',
+        'post.reward',
+        'post.content',
+        'post.techStack',
+        'post.createdAt',
+        'post.updatedAt',
+      ])
+      .leftJoin('post.company', 'company')
+      .addSelect([
+        'company.id',
+        'company.name',
+        'company.region',
+        'company.location',
+      ])
+      .where('post.deletedAt IS NULL')
+      .andWhere('post.id = :id', { id })
+      .getOne();
+
+    if (_.isNil(post)) {
+      throw new NotFoundException();
+    }
+
+    const otherPosts = await this.postRepo.find({
+      where: { deletedAt: null, companyId: company.id },
+      select: ['id', 'title'],
+    });
+
+    return {
+      ...post,
+      companyName: company.name,
+      region: company.region,
+      location: company.location,
+      otherPosts,
+    };
   }
 
   update(id: number, updatePostDto: UpdatePostDto) {
