@@ -32,11 +32,10 @@ export class PostsService {
       ])
       .leftJoin('post.company', 'company')
       .addSelect(['company.name', 'company.region'])
-      .where('post.deletedAt IS NULL')
       .orderBy('post.createdAt', 'DESC')
       .getMany();
 
-    if (_.isNil(posts)) throw new NotFoundException();
+    if (_.isNil(posts)) return [];
 
     return posts.map(({ company, ...v }) => ({
       ...v,
@@ -46,7 +45,7 @@ export class PostsService {
   }
 
   async findOne(id: number) {
-    const { company, ...post } = await this.postRepo
+    const post = await this.postRepo
       .createQueryBuilder('post')
       .select([
         'post.id',
@@ -64,7 +63,6 @@ export class PostsService {
         'company.region',
         'company.location',
       ])
-      .where('post.deletedAt IS NULL')
       .andWhere('post.id = :id', { id })
       .getOne();
 
@@ -72,13 +70,14 @@ export class PostsService {
       throw new NotFoundException();
     }
 
+    const { company, ...postValues } = post;
     const otherPosts = await this.postRepo.find({
-      where: { deletedAt: null, companyId: company.id },
+      where: { companyId: company.id },
       select: ['id', 'title'],
     });
 
     return {
-      ...post,
+      ...postValues,
       companyName: company.name,
       region: company.region,
       location: company.location,

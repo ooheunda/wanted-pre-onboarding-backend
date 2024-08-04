@@ -1,8 +1,7 @@
 import {
+  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  DeleteDateColumn,
-  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 export class BaseModel {
@@ -14,7 +13,4 @@ export class BaseModel {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt?: Date;
 }
