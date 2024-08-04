@@ -1,0 +1,16 @@
+export enum Region {
+  seoul = 'seoul',
+  gyeonggi = 'gyeonggi',
+  incheon = 'incheon',
+  sejong = 'sejong',
+  daejeon = 'daejeon',
+  daegu = 'daegu',
+  busan = 'busan',
+  ulsan = 'ulsan',
+  gwangju = 'gwangju',
+  gangwon = 'gangwon',
+  chungcheong = 'chungcheong',
+  jeolla = 'jeolla',
+  gyeongsang = 'gyeongsang',
+  jeju = 'jeju',
+}
