@@ -15,12 +15,12 @@ import { SigninUserDto } from './dto/signin-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
+  @Post('/sign-up')
   async signup(@Body() signupUserDto: SignupUserDto) {
     return this.usersService.signup(signupUserDto);
   }
 
-  @Post()
+  @Post('/sign-in')
   async signin(@Body() signinUserDto: SigninUserDto) {
     return this.usersService.signin(signinUserDto);
   }
