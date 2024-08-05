@@ -26,13 +26,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: Payload) {
     if (payload.isCompany) {
-      const company = await this.companyRepo.findOneBy({ id: payload.id });
+      const company = await this.companyRepo.findOneBy({ id: payload.sub });
       if (_.isNil(company)) {
         throw new NotFoundException();
       }
       return { isCompany: true, ...company };
     } else {
-      const user = await this.userRepo.findOneBy({ id: payload.id });
+      const user = await this.userRepo.findOneBy({ id: payload.sub });
       if (_.isNil(user)) {
         throw new NotFoundException();
       }

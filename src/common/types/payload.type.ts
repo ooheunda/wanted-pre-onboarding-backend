@@ -1,5 +1,5 @@
 export type Payload = {
   isCompany: boolean;
-  id: number;
+  sub: number;
   loginId: string;
 };
