@@ -22,11 +22,13 @@ import { UserRoleGuard } from 'src/common/guards/user-role.guard';
 import { UserRole } from 'src/common/decorators/user-role.decorator';
 import { User } from 'src/common/entities/user.entity';
 import { ResumeLinkDto } from './dto/link.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('posts')
 export class PostsController {
   constructor(private readonly postsService: PostsService) {}
 
+  @ApiBearerAuth()
   @UseGuards(UserRoleGuard)
   @UserRole('company')
   @Post()
@@ -47,6 +49,7 @@ export class PostsController {
     return await this.postsService.findOne(+id);
   }
 
+  @ApiBearerAuth()
   @UseGuards(UserRoleGuard)
   @UserRole('company')
   @Patch(':id')
@@ -58,6 +61,7 @@ export class PostsController {
     return await this.postsService.update(+id, company.id, updatePostDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(UserRoleGuard)
   @UserRole('company')
   @Delete(':id')
@@ -68,6 +72,7 @@ export class PostsController {
     return await this.postsService.remove(+id, company.id);
   }
 
+  @ApiBearerAuth()
   @UseGuards(UserRoleGuard)
   @UserRole('user')
   @Post('/:id')
