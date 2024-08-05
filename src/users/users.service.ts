@@ -1,17 +1,28 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import _ from 'lodash';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+
 import { SignupUserDto } from './dto/signup-user.dto';
 import { SigninUserDto } from './dto/signin-user.dto';
+import { Payload } from 'src/common/types/payload.type';
+
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/common/entities/user.entity';
 import { Repository } from 'typeorm';
-import _ from 'lodash';
-import { hash } from 'bcrypt';
+import { User } from 'src/common/entities/user.entity';
+
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import { compare, hash } from 'bcrypt';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepo: Repository<User>,
+    private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}
 
@@ -30,7 +41,21 @@ export class UsersService {
   }
 
   async signin(signinUserDto: SigninUserDto) {
-    return `This action returns all users`;
+    const { loginId, password } = signinUserDto;
+
+    const user = await this.findUser(loginId);
+    if (_.isNil(user)) {
+      throw new NotFoundException('user not exists');
+    }
+
+    if (!(await compare(password, user.password))) {
+      throw new UnauthorizedException('wrong password');
+    }
+
+    const payload: Payload = { isCompany: false, sub: user.id, loginId };
+    return {
+      token: this.jwtService.sign(payload),
+    };
   }
 
   private async findUser(loginId: string) {
