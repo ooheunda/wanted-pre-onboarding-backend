@@ -13,16 +13,17 @@ import {
 
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
+import { ResumeLinkDto } from './dto/link.dto';
+
 import { Company } from 'src/common/entities/company.entity';
+import { User } from 'src/common/entities/user.entity';
+
+import { UserRole } from 'src/common/decorators/user-role.decorator';
+import { UserRoleGuard } from 'src/common/guards/user-role.guard';
+import { UserInfo } from 'src/common/decorators/user-info.decorator';
 
 import { PostsService } from './posts.service';
-import { AuthGuard } from '@nestjs/passport';
-import { UserInfo } from 'src/common/decorators/user-info.decorator';
-import { UserRoleGuard } from 'src/common/guards/user-role.guard';
-import { UserRole } from 'src/common/decorators/user-role.decorator';
-import { User } from 'src/common/entities/user.entity';
-import { ResumeLinkDto } from './dto/link.dto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery } from '@nestjs/swagger';
 
 @Controller('posts')
 export class PostsController {
@@ -39,8 +40,10 @@ export class PostsController {
     return await this.postsService.create(createPostDto, company.id);
   }
 
+  @ApiQuery({ name: 'page', required: false })
+  @ApiQuery({ name: 'search', required: false })
   @Get()
-  async findAll(@Query('page') page: string, @Query('search') search: string) {
+  async findAll(@Query('page') page: number, @Query('search') search?: string) {
     return await this.postsService.findAll(+page || 1, search);
   }
 
