@@ -14,7 +14,6 @@ import { User } from './common/entities/user.entity';
 import { Post } from './common/entities/post.entity';
 import { History } from './common/entities/history.entity';
 
-// TODO: 모듈을 모듈화
 const typeOrmModuleOptions = {
   useFactory: async (
     configService: ConfigService,

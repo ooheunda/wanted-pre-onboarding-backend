@@ -1,9 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
+
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
+
+import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './jwt.strategy';
-import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { Company } from 'src/common/entities/company.entity';
 import { User } from 'src/common/entities/user.entity';
 
