@@ -1,38 +1,141 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Twoted
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 📌 개요
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- 기업의 채용을 위한 웹 서비스 api
+- 원티드 프리온보딩 백엔드 인턴십 선발 과제
+- [📃 API Test (Swagger)](http://13.124.232.109:3000/api)
+- [🗃️ Entity Relationship Diagram](https://drawsql.app/teams/me-662/diagrams/pre-ob-twoted)
 
-## Description
+### 👩‍💻 기술 스택
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+||Stack|
+|---|---|
+|**Runtime**|<img src="https://img.shields.io/badge/node.js-5FA04E?style=for-the-badge&logo=node.js&logoColor=white" />|
+|**Language**|<img src="https://img.shields.io/badge/Typescript-3178C6?style=for-the-badge&logo=Typescript&logoColor=white" />|
+|**Framework**|<img src="https://img.shields.io/badge/nestjs-E0234E?style=for-the-badge&logo=nestjs&logoColor=white" />|
+|**DataBase**|<img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white" /> <img src="https://img.shields.io/badge/typeorm-FE0803?style=for-the-badge&logo=typeorm&logoColor=white" />|
+|**Test**|<img src="https://img.shields.io/badge/jest-C21325?style=for-the-badge&logo=jest&logoColor=white" />|
+|**Environment**|<img src="https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white"> <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white" />|
+|**Deployment**|<img src="https://img.shields.io/badge/aws ec2-FF9900?style=for-the-badge&logo=amazonec2&logoColor=white"> <img src="https://img.shields.io/badge/aws rds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white">|
+|**etc**|<img src="https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens"> <img src="https://img.shields.io/badge/passport-34E27A?style=for-the-badge&logo=passport&logoColor=white"> <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white">|
 
-## Installation
+## 👔 구현 기능
+
+### 필수 요구사항
+- [x] 채용공고 등록
+- [x] 채용공고 목록 조회
+- [x] 채용공고 상세 조회
+- [x] 채용공고 수정
+- [x] 채용공고 삭제
+
+### 선택 요구사항
+- [x] 채용공고 목록 조회 - 검색
+- [x] 채용공고 상세 조회 - 회사가 올린 다른 공고 포함
+- [x] 채용공고 지원
+
+### 추가 구현사항
+- [x] 채용공고 목록 조회 - 페이지네이션
+- [x] 구직자/회사 회원가입
+- [x] 구직자/회사 로그인
+- [x] API별 접근 제한 (인가)
+
+## 🔐 .env
+
+```env
+# common
+PORT=number
+
+# Database
+DB_HOST="your host"
+DB_PORT=number
+DB_USERNAME="your name"
+DB_PASSWORD="your password"
+DB_NAME="your db name"
+DB_SYNC=boolean
+
+# Auth
+JWT_SECRET_KEY="your key"
+BCRYPT_SALT=number
+```
+
+## 📂 폴더 구조
+```
+  |-src
+  |  |-common
+  |  |  |-types
+  |  |  |  |-history-status.enum.ts
+  |  |  |  |-payload.type.ts
+  |  |  |  |-user-role.type.ts
+  |  |  |  |-region.enum.ts
+  |  |  |-decorators
+  |  |  |  |-user-role.decorator.ts
+  |  |  |  |-user-info.decorator.ts
+  |  |  |-guards
+  |  |  |  |-user-role.guard.ts
+  |  |  |-entities
+  |  |  |  |-user.entity.ts
+  |  |  |  |-company.entity.ts
+  |  |  |  |-base-model.entity.ts
+  |  |  |  |-history.entity.ts
+  |  |  |  |-post.entity.ts
+  |  |-auth
+  |  |  |-jwt.strategy.ts
+  |  |  |-auth.module.ts
+  |  |-posts
+  |  |  |-dto
+  |  |  |  |-link.dto.ts
+  |  |  |  |-create-post.dto.ts
+  |  |  |  |-update-post.dto.ts
+  |  |  |-posts.controller.ts
+  |  |  |-posts.service.spec.ts
+  |  |  |-posts.module.ts
+  |  |  |-posts.service.ts
+  |  |  |-posts.controller.spec.ts
+  |  |-users
+  |  |  |-dto
+  |  |  |  |-signup-user.dto.ts
+  |  |  |  |-signin-user.dto.ts
+  |  |  |-users.service.ts
+  |  |  |-users.controller.ts
+  |  |  |-users.module.ts
+  |  |  |-users.service.spec.ts
+  |  |  |-users.controller.spec.ts
+  |  |-companies
+  |  |  |-dto
+  |  |  |  |-signin-company.dto.ts
+  |  |  |  |-signup-company.dto.ts
+  |  |  |-companies.service.spec.ts
+  |  |  |-companies.controller.ts
+  |  |  |-companies.controller.spec.ts
+  |  |  |-companies.service.ts
+  |  |  |-companies.module.ts
+  |  |-app.module.ts
+  |  |-main.ts
+  |-test
+  |  |-app.e2e-spec.ts
+  |  |-jest-e2e.json
+  |-nest-cli.json
+  |-README.md
+  |-.gitignore
+  |-package-lock.json
+  |-package.json
+  |-tsconfig.build.json
+  |-.env
+  |-.prettierrc
+  |-.eslintrc.js
+  |-tsconfig.json
+```
+
+## 💻 How To
+
+### Installation
 
 ```bash
 $ npm install
 ```
 
-## Running the app
+### Running the app
 
 ```bash
 # development
@@ -45,7 +148,7 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+### Test
 
 ```bash
 # unit tests
@@ -57,17 +160,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
