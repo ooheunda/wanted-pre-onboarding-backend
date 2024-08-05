@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { CompaniesService } from './companies.service';
-import { CompaniesController } from './companies.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { Company } from 'src/common/entities/company.entity';
+
+import { UsersService } from './users.service';
+import { UsersController } from './users.controller';
+import { User } from 'src/common/entities/user.entity';
 
 @Module({
   imports: [
@@ -15,9 +16,9 @@ import { Company } from 'src/common/entities/company.entity';
       }),
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([Company]),
+    TypeOrmModule.forFeature([User]),
   ],
-  controllers: [CompaniesController],
-  providers: [CompaniesService],
+  controllers: [UsersController],
+  providers: [UsersService],
 })
-export class CompaniesModule {}
+export class UsersModule {}

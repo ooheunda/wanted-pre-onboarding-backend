@@ -1,26 +1,32 @@
-import { BaseModel } from './base-model.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { BaseModel } from './base-model.entity';
 import { Company } from './company.entity';
+import { History } from './history.entity';
 
 @Entity({ name: 'posts' })
 export class Post extends BaseModel {
+  @Column('int', { nullable: false })
+  companyId: number;
+
   @Column('varchar', { nullable: false })
   title: string;
 
   @Column('varchar', { nullable: false })
-  content: string;
+  description: string;
 
   @Column('varchar', { nullable: false })
-  techStack: string; // TODO: tech_stacks 중간 테이블 고민
+  techStack: string; // TODO: tech_stacks 중간 테이블 or enum
 
   @Column('int', { nullable: false })
   reward: number;
 
-  @Column('int', { nullable: false })
-  companyId: number;
-
   @ManyToOne(() => Company, (company) => company.posts, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'company_id', referencedColumnName: 'id' })
   company: Company;
+
+  @OneToMany(() => History, (history) => history.posts, {
+    onDelete: 'NO ACTION',
+  })
+  history: History[];
 }

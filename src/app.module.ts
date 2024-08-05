@@ -5,10 +5,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
-import { PostsModule } from './posts/posts.module';
 import { CompaniesModule } from './companies/companies.module';
-import { Post } from './common/entities/post.entity';
+import { UsersModule } from './users/users.module';
+import { PostsModule } from './posts/posts.module';
+
 import { Company } from './common/entities/company.entity';
+import { User } from './common/entities/user.entity';
+import { Post } from './common/entities/post.entity';
+import { History } from './common/entities/history.entity';
 
 // TODO: 모듈을 모듈화
 const typeOrmModuleOptions = {
@@ -22,7 +26,7 @@ const typeOrmModuleOptions = {
     username: configService.get('DB_USERNAME'),
     password: configService.get('DB_PASSWORD'),
     database: configService.get('DB_NAME'),
-    entities: [Company, Post],
+    entities: [Company, User, Post, History],
     synchronize: configService.get('DB_SYNC'),
     logging: true,
   }),
@@ -42,10 +46,12 @@ const typeOrmModuleOptions = {
         DB_NAME: Joi.string().required(),
         DB_SYNC: Joi.boolean().required(),
         JWT_SECRET_KEY: Joi.string().required(),
+        BCRYPT_SALT: Joi.number().required(),
       }),
     }),
-    PostsModule,
     CompaniesModule,
+    UsersModule,
+    PostsModule,
   ],
   controllers: [],
   providers: [],
