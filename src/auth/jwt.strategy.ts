@@ -1,13 +1,15 @@
+import _ from 'lodash';
 import { ExtractJwt, Strategy } from 'passport-jwt';
+import { PassportStrategy } from '@nestjs/passport';
 
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { PassportStrategy } from '@nestjs/passport';
-import { Payload } from 'src/common/types/payload.type';
+
 import { InjectRepository } from '@nestjs/typeorm';
-import { Company } from 'src/common/entities/company.entity';
 import { Repository } from 'typeorm';
-import _ from 'lodash';
+
+import { Payload } from 'src/common/types/payload.type';
+import { Company } from 'src/common/entities/company.entity';
 import { User } from 'src/common/entities/user.entity';
 
 @Injectable()
