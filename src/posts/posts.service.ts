@@ -1,6 +1,7 @@
 import _ from 'lodash';
 
 import {
+  ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -10,10 +11,15 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { History } from 'src/common/entities/history.entity';
 
 @Injectable()
 export class PostsService {
-  constructor(@InjectRepository(Post) private postRepo: Repository<Post>) {}
+  constructor(
+    @InjectRepository(Post) private readonly postRepo: Repository<Post>,
+    @InjectRepository(History)
+    private readonly historyRepo: Repository<History>,
+  ) {}
 
   async create(createPostDto: CreatePostDto, companyId: number) {
     return await this.postRepo.save({ ...createPostDto, companyId });
@@ -121,5 +127,22 @@ export class PostsService {
     }
 
     return this.postRepo.remove(post);
+  }
+
+  async apply(id: number, userId: number, resumeLink: string) {
+    const post = await this.postRepo.findOneBy({ id });
+    if (_.isNil(post)) {
+      throw new NotFoundException('post not found');
+    }
+
+    const alreadyApplied = await this.historyRepo.findOneBy({
+      postId: id,
+      userId,
+    });
+    if (!_.isNil(alreadyApplied)) {
+      throw new ConflictException('already applied');
+    }
+
+    return await this.historyRepo.save({ postId: id, userId, resumeLink });
   }
 }

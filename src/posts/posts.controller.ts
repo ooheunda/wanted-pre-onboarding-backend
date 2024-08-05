@@ -20,6 +20,8 @@ import { AuthGuard } from '@nestjs/passport';
 import { UserInfo } from 'src/common/decorators/user-info.decorator';
 import { UserRoleGuard } from 'src/common/guards/user-role.guard';
 import { UserRole } from 'src/common/decorators/user-role.decorator';
+import { User } from 'src/common/entities/user.entity';
+import { ResumeLinkDto } from './dto/link.dto';
 
 @Controller('posts')
 export class PostsController {
@@ -64,5 +66,20 @@ export class PostsController {
     @UserInfo() company: Company,
   ) {
     return await this.postsService.remove(+id, company.id);
+  }
+
+  @UseGuards(UserRoleGuard)
+  @UserRole('user')
+  @Post('/:id')
+  async apply(
+    @Param('id', ParseIntPipe) id: string,
+    @Body() resumeLinkDto: ResumeLinkDto,
+    @UserInfo() user: User,
+  ) {
+    return await this.postsService.apply(
+      +id,
+      user.id,
+      resumeLinkDto.resumeLink,
+    );
   }
 }
