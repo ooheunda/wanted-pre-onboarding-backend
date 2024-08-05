@@ -16,7 +16,7 @@ export class Post extends BaseModel {
   description: string;
 
   @Column('varchar', { nullable: false })
-  techStack: string; // TODO: tech_stacks 중간 테이블 or enum
+  techStack: string;
 
   @Column('int', { nullable: false })
   reward: number;

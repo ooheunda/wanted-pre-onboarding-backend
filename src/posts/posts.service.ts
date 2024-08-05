@@ -1,17 +1,18 @@
 import _ from 'lodash';
-
 import {
   ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Post } from 'src/common/entities/post.entity';
-import { CreatePostDto } from './dto/create-post.dto';
-import { UpdatePostDto } from './dto/update-post.dto';
+
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Post } from 'src/common/entities/post.entity';
 import { History } from 'src/common/entities/history.entity';
+
+import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -26,8 +27,6 @@ export class PostsService {
   }
 
   async findAll(page: number, search: string) {
-    // TODO: (qs) pagination, search
-    // TODO: raw query
     const queryBuilder = this.postRepo
       .createQueryBuilder('post')
       .select([
