@@ -1,21 +1,22 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import _ from 'lodash';
+
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Post } from 'src/common/entities/post.entity';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Company } from 'src/common/entities/company.entity';
-import _ from 'lodash';
 
 @Injectable()
 export class PostsService {
-  constructor(
-    @InjectRepository(Post) private postRepo: Repository<Post>,
-    @InjectRepository(Company) private companyRepo: Repository<Company>,
-  ) {}
+  constructor(@InjectRepository(Post) private postRepo: Repository<Post>) {}
 
-  create(createPostDto: CreatePostDto) {
-    return 'This action adds a new post';
+  async create(createPostDto: CreatePostDto, companyId: number) {
+    return await this.postRepo.save({ ...createPostDto, companyId });
   }
 
   async findAll() {
@@ -67,7 +68,7 @@ export class PostsService {
       .getOne();
 
     if (_.isNil(post)) {
-      throw new NotFoundException();
+      throw new NotFoundException('post not found');
     }
 
     const { company, ...postValues } = post;
@@ -85,11 +86,30 @@ export class PostsService {
     };
   }
 
-  update(id: number, updatePostDto: UpdatePostDto) {
-    return `This action updates a #${id} post`;
+  async update(id: number, companyId: number, updatePostDto: UpdatePostDto) {
+    const post = await this.postRepo.findOneBy({ id });
+    if (_.isNil(post)) {
+      throw new NotFoundException('post not found');
+    }
+
+    if (post.companyId !== companyId) {
+      throw new UnauthorizedException();
+    }
+
+    const updatedPost = Object.assign(post, updatePostDto);
+    return this.postRepo.save(updatedPost);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} post`;
+  async remove(id: number, companyId: number) {
+    const post = await this.postRepo.findOneBy({ id });
+    if (_.isNil(post)) {
+      throw new NotFoundException('post not found');
+    }
+
+    if (post.companyId !== companyId) {
+      throw new UnauthorizedException();
+    }
+
+    return this.postRepo.remove(post);
   }
 }
