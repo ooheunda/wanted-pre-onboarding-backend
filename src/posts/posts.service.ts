@@ -51,7 +51,7 @@ export class PostsService {
         'post.id',
         'post.title',
         'post.reward',
-        'post.content',
+        'post.description',
         'post.techStack',
         'post.createdAt',
         'post.updatedAt',
