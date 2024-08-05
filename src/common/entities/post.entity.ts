@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 import { BaseModel } from './base-model.entity';
 import { Company } from './company.entity';
+import { History } from './history.entity';
 
 @Entity({ name: 'posts' })
 export class Post extends BaseModel {
@@ -23,4 +24,9 @@ export class Post extends BaseModel {
   @ManyToOne(() => Company, (company) => company.posts, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'company_id', referencedColumnName: 'id' })
   company: Company;
+
+  @OneToMany(() => History, (history) => history.posts, {
+    onDelete: 'NO ACTION',
+  })
+  history: History[];
 }
