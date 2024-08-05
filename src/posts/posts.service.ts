@@ -19,10 +19,10 @@ export class PostsService {
     return await this.postRepo.save({ ...createPostDto, companyId });
   }
 
-  async findAll() {
+  async findAll(page: number, search: string) {
     // TODO: (qs) pagination, search
     // TODO: raw query
-    const posts = await this.postRepo
+    const queryBuilder = this.postRepo
       .createQueryBuilder('post')
       .select([
         'post.id',
@@ -33,7 +33,17 @@ export class PostsService {
       ])
       .leftJoin('post.company', 'company')
       .addSelect(['company.name', 'company.region'])
-      .orderBy('post.createdAt', 'DESC')
+      .orderBy('post.createdAt', 'DESC');
+
+    if (!_.isNil(search)) {
+      queryBuilder.where('post.description LIKE :search', {
+        search: `%${search}%`,
+      });
+    }
+
+    const posts = await queryBuilder
+      .skip((page - 1) * 10)
+      .take(10)
       .getMany();
 
     if (_.isNil(posts)) return [];

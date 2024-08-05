@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 
 import { CreatePostDto } from './dto/create-post.dto';
@@ -35,8 +36,8 @@ export class PostsController {
   }
 
   @Get()
-  async findAll() {
-    return await this.postsService.findAll();
+  async findAll(@Query('page') page: string, @Query('search') search: string) {
+    return await this.postsService.findAll(+page || 1, search);
   }
 
   @Get(':id')
