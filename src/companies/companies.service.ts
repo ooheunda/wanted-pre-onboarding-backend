@@ -68,7 +68,7 @@ export class CompaniesService {
   private async findCompany(loginId: string) {
     const company = await this.companyRepo.findOne({
       where: { loginId },
-      select: ['password'],
+      select: ['id', 'password'],
     });
 
     return company;
