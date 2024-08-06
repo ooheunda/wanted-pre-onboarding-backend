@@ -61,7 +61,7 @@ export class UsersService {
   private async findUser(loginId: string) {
     const user = await this.userRepo.findOne({
       where: { loginId },
-      select: ['password'],
+      select: ['id', 'password'],
     });
 
     return user;
