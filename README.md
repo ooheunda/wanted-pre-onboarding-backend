@@ -4,7 +4,7 @@
 
 - 기업의 채용을 위한 웹 서비스 api
 - 원티드 프리온보딩 백엔드 인턴십 선발 과제
-- [📃 API Test (Swagger)](http://13.124.232.109:3000/api)
+- [📃 API Test (Swagger)](http://13.124.232.109:4000/api)
 - [🗃️ Entity Relationship Diagram](https://drawsql.app/teams/me-662/diagrams/pre-ob-twoted)
 
 ### 👩‍💻 기술 스택
