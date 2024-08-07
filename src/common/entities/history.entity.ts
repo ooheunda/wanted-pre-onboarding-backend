@@ -17,7 +17,11 @@ export class History extends BaseModel {
   @Column('varchar', { nullable: false })
   resumeLink: string;
 
-  @Column('enum', { enum: HistoryStatus, nullable: false })
+  @Column('enum', {
+    enum: HistoryStatus,
+    default: HistoryStatus.applied,
+    nullable: false,
+  })
   status: HistoryStatus;
 
   @ManyToOne(() => Post, (post) => post.history, { onDelete: 'NO ACTION' })
